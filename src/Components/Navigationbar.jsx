@@ -6,7 +6,7 @@ const Navigationbar = () => {
   const path = useLocation().pathname;
 
   return (
-    <Navbar fluid rounded className="bg-indigo-400">
+    <Navbar fluid className="bg-indigo-400">
       <Navbar.Brand href="/">
         <Button className="bg-gradient-to-r from-indigo-600 via-indigo-200 to-indigo-600">
           <img
