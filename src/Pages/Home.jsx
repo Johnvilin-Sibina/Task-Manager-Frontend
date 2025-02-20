@@ -1,11 +1,14 @@
 import { Button } from "flowbite-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Navigationbar from "../Components/Navigationbar";
 
 const Home = () => {
   const navigate = useNavigate();
 
   return (
+    <>
+    <Navigationbar />
     <div className="flex flex-col justify-center items-center">
       <div className="max-w-screen-lg">
         <div className="flex flex-col sm:flex-row justify-center items-center">
@@ -31,6 +34,7 @@ const Home = () => {
         </Button>
       </div>
     </div>
+    </>
   );
 };
 

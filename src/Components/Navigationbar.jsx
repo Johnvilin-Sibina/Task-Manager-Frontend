@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import { useLocation } from "react-router-dom";
+import { myContext } from "../App";
 
 const Navigationbar = () => {
+  const [currentUser,setCurrentUser] = useContext(myContext)
   const path = useLocation().pathname;
 
   return (
@@ -32,9 +34,9 @@ const Navigationbar = () => {
           }
         >
           <Dropdown.Header>
-            <span className="block text-sm">Bonnie Green</span>
+            <span className="block text-sm">{currentUser.userName}</span>
             <span className="block truncate text-sm font-medium">
-              name@flowbite.com
+              {currentUser.email}
             </span>
           </Dropdown.Header>
           <Dropdown.Item>Dashboard</Dropdown.Item>
