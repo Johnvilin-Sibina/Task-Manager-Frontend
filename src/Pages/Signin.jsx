@@ -1,24 +1,54 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { myContext } from "../App";
+import Navigationbar from "../Components/Navigationbar";
 
 const Signin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+
+  const [currentUser,setCurrentUser] = useContext(myContext)
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("User Signed In:", formData);
-  };
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login-user',
+        {
+          method:"POST",
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify(formData)
+        }
+      )
 
-  const handleGoogleSignin = () => {
-    console.log("Google Signin Clicked");
-  };
+      const data = await response.json()
+      if(!response.ok){
+        toast.error(data.message || "Something went wrong")
+      }
+
+      if(response.ok){
+        localStorage.setItem('Token',data.token)
+        setCurrentUser(data.rest)
+        toast.success(data.message)
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+    
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+   <>
+   <Navigationbar />
+   <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
       <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 shadow-xl w-96">
         <h2 className="text-2xl font-bold text-white text-center mb-6">Welcome Back</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -47,25 +77,6 @@ const Signin = () => {
             Sign In
           </button>
         </form>
-        
-        <div className="flex items-center my-4">
-          <div className="w-full h-[1px] bg-gray-300"></div>
-          <span className="px-2 text-white">OR</span>
-          <div className="w-full h-[1px] bg-gray-300"></div>
-        </div>
-
-        <button
-          onClick={handleGoogleSignin}
-          className="w-full flex items-center justify-center p-3 bg-white text-black font-semibold rounded-lg shadow-md transition-all duration-300 hover:bg-gray-200"
-        >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-            alt="Google"
-            className="w-6 h-6 mr-2"
-          />
-          Sign in with Google
-        </button>
-
         <p className="text-center text-gray-200 mt-4">
           Don't have an account?{" "}
           <Link to="/signup" className="text-white font-bold underline">
@@ -74,6 +85,7 @@ const Signin = () => {
         </p>
       </div>
     </div>
+   </>
   );
 };
 

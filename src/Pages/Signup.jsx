@@ -1,33 +1,64 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Navigationbar from "../Components/Navigationbar";
 
 const Signup = () => {
-  const [formData, setFormData] = useState({ userName: "", email: "", password: "" });
+
+  const [formData, setFormData] = useState({
+    userName: "",
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("User Signed Up:", formData);
-  };
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register-user',
+        {
+          method:"POST",
+          headers:{            
+          'Content-Type':"application/json",
+          },
+          body:JSON.stringify(formData)
+        }
+      )
+     const data =  await response.json()
 
-  const handleGoogleSignup = () => {
-    console.log("Google Signup Clicked");
+     if (!response.ok) {
+      toast.error(data.message || "Something went wrong");
+      return;
+    }
+
+      if(response.ok){
+        toast.success(data.message);
+        navigate('/signin')
+      }
+
+    } catch (error) {
+      toast.error(error.message)
+    }
   };
 
   return (
+    <>
+    <Navigationbar />
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
       <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 shadow-xl w-96">
-        <h2 className="text-2xl font-bold text-white text-center mb-6">Create an Account</h2>
+        <h2 className="text-2xl font-bold text-white text-center mb-6">Create Account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
             name="userName"
             placeholder="Full Name"
-N            onChange={handleChange}
-            required
+            value={formData.userName}
+            onChange={handleChange}
             className="w-full p-3 text-white bg-transparent border border-white rounded-lg focus:outline-none placeholder-gray-200"
           />
           <input
@@ -55,25 +86,6 @@ N            onChange={handleChange}
             Sign Up
           </button>
         </form>
-        
-        <div className="flex items-center my-4">
-          <div className="w-full h-[1px] bg-gray-300"></div>
-          <span className="px-2 text-white">OR</span>
-          <div className="w-full h-[1px] bg-gray-300"></div>
-        </div>
-
-        <button
-          onClick={handleGoogleSignup}
-          className="w-full flex items-center justify-center p-3 bg-white text-black font-semibold rounded-lg shadow-md transition-all duration-300 hover:bg-gray-200"
-        >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-            alt="Google"
-            className="w-6 h-6 mr-2"
-          />
-          Sign up with Google
-        </button>
-
         <p className="text-center text-gray-200 mt-4">
           Already have an account?{" "}
           <Link to="/signin" className="text-white font-bold underline">
@@ -82,6 +94,7 @@ N            onChange={handleChange}
         </p>
       </div>
     </div>
+    </>
   );
 };
 
