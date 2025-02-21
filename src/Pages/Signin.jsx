@@ -37,7 +37,7 @@ const Signin = () => {
         localStorage.setItem('Token',data.token)
         setCurrentUser(data.rest)
         toast.success(data.message)
-        navigate('/dashboard')
+        navigate('/dashboard?tab=home')
       }
     } catch (error) {
       toast.error(error.message)

@@ -1,12 +1,10 @@
 import React from 'react';
 import { FaPlus } from "react-icons/fa";
-import DashboardSidebar from '../Components/DashboardSidebar';
 import DashboardNavbar from '../Components/DashboardNavbar';
 
 const DashboardHome = () => {
     return (
-        <div className="flex h-screen">
-           <DashboardSidebar />
+        
       <div className="flex-1 flex flex-col">
        <DashboardNavbar />
         <div className="p-6">
@@ -36,7 +34,6 @@ const DashboardHome = () => {
           </div>
         </div>
       </div>
-        </div>
     );
 };
 

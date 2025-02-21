@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar } from "flowbite-react";
 import { HiArrowSmLeft, HiChartPie } from "react-icons/hi";
 import { FaTasks, FaHome } from "react-icons/fa";
 import { MdOutlineAddTask } from "react-icons/md";
+import { Link, useLocation } from "react-router-dom";
 
 const DashboardSidebar = () => {
+    
+    const location = useLocation()
+    const [tab,setTab] = useState()
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(location.search);
+        const tabUrl = urlParams.get("tab");
+        if (tabUrl) {
+          setTab(tabUrl);
+        }
+      }, [location.search]);
+
   return (
     <Sidebar className="h-screen">
       <Sidebar.Items>
@@ -23,16 +36,16 @@ const DashboardSidebar = () => {
           </Sidebar.Logo>
         </Sidebar.ItemGroup>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={HiChartPie}>
+          <Sidebar.Item as={Link} to="/dashboard?tab=home" active={tab==='home'} icon={HiChartPie}>
             Dashboard
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={FaTasks}>
+         <Sidebar.Item as={Link} to="/dashboard?tab=mytasks"  active={tab==='mytasks'} icon={FaTasks}>
             My Tasks
           </Sidebar.Item>
-          <Sidebar.Item href="#" icon={MdOutlineAddTask}>
+         <Sidebar.Item as={Link} to="/dashboard?tab=addtask" active={tab==='addtask'} icon={MdOutlineAddTask}>
             Add Task
           </Sidebar.Item>
-          <Sidebar.Item href="/" icon={FaHome}>
+          <Sidebar.Item as={Link} to='/' icon={FaHome}>
             Home
           </Sidebar.Item>
         </Sidebar.ItemGroup>

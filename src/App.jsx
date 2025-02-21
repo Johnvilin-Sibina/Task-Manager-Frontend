@@ -5,7 +5,7 @@ import About from './Pages/About';
 import Signup from './Pages/Signup';
 import Signin from './Pages/Signin';
 import { ToastContainer } from 'react-toastify';
-import DashboardHome from './Pages/DashboardHome';
+import Dashboard from './Components/Dashboard';
 
 
 export const myContext = createContext();
@@ -25,7 +25,7 @@ const [currentUser,setCurrentUser] = useState({})
       <Route path='/about' element={<About />} />
       <Route path='/signup' element={<Signup />} />
       <Route path='/signin' element={<Signin />} />
-      <Route path='/dashboard' element={<DashboardHome />} />
+      <Route path='/dashboard' element={<Dashboard />} />
      </Routes>     
     </myContext.Provider> 
      </BrowserRouter>
