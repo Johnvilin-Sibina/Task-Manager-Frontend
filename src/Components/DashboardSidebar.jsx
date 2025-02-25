@@ -3,12 +3,13 @@ import { Sidebar } from "flowbite-react";
 import { HiArrowSmLeft, HiChartPie } from "react-icons/hi";
 import { FaTasks, FaHome } from "react-icons/fa";
 import { MdOutlineAddTask } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const DashboardSidebar = () => {
     
     const location = useLocation()
     const [tab,setTab] = useState()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
@@ -17,6 +18,11 @@ const DashboardSidebar = () => {
           setTab(tabUrl);
         }
       }, [location.search]);
+
+      const handleSignOut = async()=>{
+        localStorage.removeItem('Token')
+        navigate('/signin')
+      }
 
   return (
     <Sidebar className="h-screen">
@@ -50,7 +56,7 @@ const DashboardSidebar = () => {
           </Sidebar.Item>
         </Sidebar.ItemGroup>
         <Sidebar.ItemGroup>
-          <Sidebar.Item href="#" icon={HiArrowSmLeft}>
+          <Sidebar.Item onClick={handleSignOut} icon={HiArrowSmLeft}>
             Sign Out
           </Sidebar.Item>
         </Sidebar.ItemGroup>

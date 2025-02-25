@@ -1,11 +1,17 @@
 import React, { useContext } from "react";
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { myContext } from "../App";
 
 const Navigationbar = () => {
   const [currentUser,setCurrentUser] = useContext(myContext)
   const path = useLocation().pathname;
+  const navigate = useNavigate()
+
+  const handleSignOut = async()=>{
+    localStorage.removeItem('Token')
+    navigate('/signin')
+  }
 
   return (
     <Navbar fluid className="bg-indigo-400">
@@ -41,7 +47,7 @@ const Navigationbar = () => {
           </Dropdown.Header>
           <Dropdown.Item>Dashboard</Dropdown.Item>
           <Dropdown.Divider />
-          <Dropdown.Item>Sign out</Dropdown.Item>
+          <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
         </Dropdown>
         <Navbar.Toggle />
       </div>
