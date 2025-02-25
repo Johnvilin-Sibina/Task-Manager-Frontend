@@ -6,6 +6,7 @@ import Signup from './Pages/Signup';
 import Signin from './Pages/Signin';
 import { ToastContainer } from 'react-toastify';
 import Dashboard from './Components/Dashboard';
+import EditTask from './Pages/EditTask';
 
 
 export const myContext = createContext();
@@ -26,6 +27,7 @@ const [currentUser,setCurrentUser] = useState({})
       <Route path='/signup' element={<Signup />} />
       <Route path='/signin' element={<Signin />} />
       <Route path='/dashboard' element={<Dashboard />} />
+      <Route path='/edittask/:id' element={<EditTask />} />
      </Routes>     
     </myContext.Provider> 
      </BrowserRouter>

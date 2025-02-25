@@ -1,11 +1,9 @@
 import React, { useContext, useState } from "react";
 import { FaCalendarAlt, FaTasks, FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { myContext } from "../App";
 
-const AddTask = () => {
-    const [currentUser,setCurrentUser] = useContext(myContext)
-    const user = currentUser._id
+const AddTask = ({currentUser}) => {
+    const user = currentUser?._id
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -28,7 +26,7 @@ const AddTask = () => {
                     'Content-Type':'application/json',
                     'token':localStorage.getItem('Token')
                 },
-                body:JSON.stringify(task,user)
+                body:JSON.stringify({...task,user})
             }
         )
         const data = await response.json()
