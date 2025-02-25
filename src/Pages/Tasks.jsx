@@ -61,7 +61,7 @@ const Tasks = ({ currentUser }) => {
   };
 
   const handleEdit = async(id)=>{
-    navigate(`/edittask/${id}`)
+    navigate(`/dashboard?tab=edittask&id=${id}`)
   }
 
   return (

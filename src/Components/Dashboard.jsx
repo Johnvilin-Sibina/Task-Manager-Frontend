@@ -10,14 +10,19 @@ import EditTask from '../Pages/EditTask';
 const Dashboard = () => {
     const location = useLocation()
     const [tab,setTab] = useState()
+    const [taskId, setTaskId] = useState(null);
 
     const [currentUser,setCurrentUser] = useContext(myContext)
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
         const tabUrl = urlParams.get("tab");
+        const idUrl = urlParams.get("id");
         if (tabUrl) {
           setTab(tabUrl);
+        }
+        if (idUrl) {
+            setTaskId(idUrl);
         }
       }, [location.search]);
 
@@ -27,6 +32,7 @@ const Dashboard = () => {
           {tab==='home' && <DashboardHome />}
           {tab==='addtask' && <AddTask currentUser={currentUser} />}
           {tab==='mytasks' && <Tasks currentUser={currentUser} />}
+          {tab === 'edittask' && taskId && <EditTask taskId={taskId} />}
         </div>
     );
 };
