@@ -83,6 +83,11 @@ const Signin = () => {
             Sign up
           </Link>
         </p>
+        <p className="text-center text-gray-200 mt-4">
+        <Link to="/forgotpassword" className="text-white font-bold underline">
+            Forgot Password?
+          </Link>
+          </p>
       </div>
     </div>
    </>
