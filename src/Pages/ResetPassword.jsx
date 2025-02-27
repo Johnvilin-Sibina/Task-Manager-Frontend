@@ -1,12 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { myContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const {currentUser} = useContext(myContext)
   const {id,token} = useParams()
   const navigate = useNavigate()
 

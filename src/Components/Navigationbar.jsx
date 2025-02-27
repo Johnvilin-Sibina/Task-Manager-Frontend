@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { myContext } from "../App";
+import { MyContext } from "../Context/MyProvider";
 
 const Navigationbar = () => {
-  const [currentUser,setCurrentUser] = useContext(myContext)
+  const {currentUser} = useContext(MyContext)
   const path = useLocation().pathname;
   const navigate = useNavigate()
 
@@ -40,12 +40,12 @@ const Navigationbar = () => {
           }
         >
           <Dropdown.Header>
-            <span className="block text-sm">{currentUser.userName}</span>
+            <span className="block text-sm">{currentUser?.userName || ""}</span>
             <span className="block truncate text-sm font-medium">
-              {currentUser.email}
+              {currentUser?.email || ""}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
+          <Dropdown.Item href='/dashboard?tab=home'>Dashboard</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
         </Dropdown>

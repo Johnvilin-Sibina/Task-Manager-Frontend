@@ -8,6 +8,8 @@ import { ToastContainer } from 'react-toastify';
 import Dashboard from './Components/Dashboard';
 import ForgotPassword from './Pages/ForgotPassword';
 import ResetPassword from './Pages/ResetPassword';
+import MyProvider from './Context/MyProvider';
+
 
 
 export const myContext = createContext();
@@ -15,13 +17,12 @@ export const myContext = createContext();
 
 const App = () => { 
 
-const [currentUser,setCurrentUser] = useState({})
 
   return (
     <div>
      <BrowserRouter>  
      <ToastContainer />
-     <myContext.Provider value={[currentUser,setCurrentUser]} >  
+     <MyProvider>
      <Routes>
       <Route path="/" element={<Home />}/>
       <Route path='/about' element={<About />} />
@@ -30,8 +31,8 @@ const [currentUser,setCurrentUser] = useState({})
       <Route path='/forgotpassword' element={<ForgotPassword />} />
       <Route path='/resetpassword/:id/:token' element={<ResetPassword />} />
       <Route path='/dashboard' element={<Dashboard />} />
-     </Routes>     
-    </myContext.Provider> 
+     </Routes>
+     </MyProvider>  
      </BrowserRouter>
     </div>
   );

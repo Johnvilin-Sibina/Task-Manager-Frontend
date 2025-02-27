@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import DashboardNavbar from "../Components/DashboardNavbar";
 import { useNavigate } from "react-router-dom";
+import { MyContext } from "../Context/MyProvider";
 
-const DashboardHome = ({ currentUser }) => {
-  const user = currentUser?._id;
-  const [tasks, setTasks] = useState([]);
+const DashboardHome = () => {
+  const {currentUser,tasks,setTasks} = useContext(MyContext)
+  const user = currentUser?._id || JSON.parse(localStorage.getItem("currentUser"))?._id;
   const navigate = useNavigate()
 
   const fetchTasks = async () => {
@@ -20,13 +21,14 @@ const DashboardHome = ({ currentUser }) => {
     );
     const data = await response.json();
     if (response.ok) {
+      localStorage.setItem('tasks',JSON.stringify(data.tasks))
       setTasks(data.tasks);
     }
   };
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+      fetchTasks();
+  },[]);
 
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(task => task.status === "Completed").length;

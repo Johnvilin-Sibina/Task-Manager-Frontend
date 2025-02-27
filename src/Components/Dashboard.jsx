@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardSidebar from './DashboardSidebar';
 import DashboardHome from '../Pages/DashboardHome';
 import { useLocation } from 'react-router-dom';
 import AddTask from '../Pages/AddTask';
-import { myContext } from '../App';
 import Tasks from '../Pages/Tasks';
 import EditTask from '../Pages/EditTask';
 
@@ -11,8 +10,6 @@ const Dashboard = () => {
     const location = useLocation()
     const [tab,setTab] = useState()
     const [taskId, setTaskId] = useState(null);
-
-    const [currentUser,setCurrentUser] = useContext(myContext)
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
@@ -29,9 +26,9 @@ const Dashboard = () => {
     return (
         <div className="flex h-screen">
           <DashboardSidebar />
-          {tab==='home' && <DashboardHome currentUser={currentUser} />}
-          {tab==='addtask' && <AddTask currentUser={currentUser} />}
-          {tab==='mytasks' && <Tasks currentUser={currentUser} />}
+          {tab==='home' && <DashboardHome />}
+          {tab==='addtask' && <AddTask />}
+          {tab==='mytasks' && <Tasks />}
           {tab === 'edittask' && taskId && <EditTask taskId={taskId} />}
         </div>
     );

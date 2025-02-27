@@ -1,40 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import DashboardNavbar from "../Components/DashboardNavbar";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { MyContext } from "../Context/MyProvider";
 
-const Tasks = ({ currentUser }) => {
-  const [tasks, setTasks] = useState([]);
-  const user = currentUser?._id;
+const Tasks = () => {
+  const {tasks, setTasks} = useContext(MyContext)
   const navigate = useNavigate()
 
-  const fetchTasks = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/user/get-tasks/${user}`,
-        {
-          method: "GET",
-          headers: {
-            token: localStorage.getItem("Token"),
-          },
-        }
-      );
-      const data = await response.json();
-      if (!response.ok) {
-        toast.error(data.message);
-      } else {
-        setTasks(data.tasks);
-        toast.success("Tasks fetched successfully");
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
 
   const handleDelete = async (id) => {
     try {
@@ -118,3 +93,30 @@ const Tasks = ({ currentUser }) => {
 };
 
 export default Tasks;
+
+  // const fetchTasks = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:5000/api/user/get-tasks/${user}`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           token: localStorage.getItem("Token"),
+  //         },
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     if (!response.ok) {
+  //       toast.error(data.message);
+  //     } else {
+  //       setTasks(data.tasks);
+  //       toast.success("Tasks fetched successfully");
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchTasks();
+  // }, []);

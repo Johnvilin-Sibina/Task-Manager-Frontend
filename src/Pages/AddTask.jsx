@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
 import { FaCalendarAlt, FaTasks, FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { MyContext } from "../Context/MyProvider";
 
-const AddTask = ({currentUser}) => {
+const AddTask = () => {
+  const {currentUser} = useContext(MyContext)
     const user = currentUser?._id
   const [task, setTask] = useState({
     title: "",

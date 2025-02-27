@@ -1,14 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { myContext } from "../App";
 import Navigationbar from "../Components/Navigationbar";
+import { MyContext } from "../Context/MyProvider";
 
 const Signin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-
-  const [currentUser,setCurrentUser] = useContext(myContext)
-
+  const {setCurrentUser} = useContext(MyContext)
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -34,7 +32,8 @@ const Signin = () => {
       }
 
       if(response.ok){
-        localStorage.setItem('Token',data.token)
+        localStorage.setItem('Token',data.token);
+        localStorage.setItem("currentUser", JSON.stringify(data.rest));
         setCurrentUser(data.rest)
         toast.success(data.message)
         navigate('/dashboard?tab=home')
