@@ -11,7 +11,7 @@ const EditTask = ({ taskId }) => {
   const fetchTask = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/user/get-task/${taskId}`,
+        `https://task-manager-backend-o32y.onrender.com/api/user/get-task/${taskId}`,
         {
           method: "GET",
           headers: {
@@ -38,7 +38,7 @@ const EditTask = ({ taskId }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5000/api/user/edit-task/${taskId}`,
+        `https://task-manager-backend-o32y.onrender.com/api/user/edit-task/${taskId}`,
         {
           method: "PUT",
           headers: {

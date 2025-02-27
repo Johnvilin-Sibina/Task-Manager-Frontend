@@ -20,7 +20,7 @@ const Signup = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register-user',
+      const response = await fetch('https://task-manager-backend-o32y.onrender.com/api/auth/register-user',
         {
           method:"POST",
           headers:{            

@@ -10,7 +10,7 @@ const ForgotPassword = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-        const response = await fetch('http://localhost:5000/api/auth/forgot-password',
+        const response = await fetch('https://task-manager-backend-o32y.onrender.com/api/auth/forgot-password',
             {
                 method:'POST',
                 headers:{

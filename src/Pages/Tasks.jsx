@@ -13,7 +13,7 @@ const Tasks = () => {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/user/delete-task/${id}`,
+        `https://task-manager-backend-o32y.onrender.com/api/user/delete-task/${id}`,
         {
           method: "DELETE",
           headers: {

@@ -11,7 +11,7 @@ const ResetPassword = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-        const response = await fetch(`http://localhost:5000/api/auth/reset-password/${id}/${token}`,
+        const response = await fetch(`https://task-manager-backend-o32y.onrender.com/api/auth/reset-password/${id}/${token}`,
             {
                 method:"PUT",
                 headers:{

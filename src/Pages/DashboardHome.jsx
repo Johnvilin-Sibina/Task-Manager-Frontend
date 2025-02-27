@@ -11,7 +11,7 @@ const DashboardHome = () => {
 
   const fetchTasks = async () => {
     const response = await fetch(
-      `http://localhost:5000/api/user/get-tasks/${user}`,
+      `https://task-manager-backend-o32y.onrender.com/api/user/get-tasks/${user}`,
       {
         method: "GET",
         headers: {
