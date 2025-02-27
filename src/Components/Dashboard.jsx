@@ -29,7 +29,7 @@ const Dashboard = () => {
     return (
         <div className="flex h-screen">
           <DashboardSidebar />
-          {tab==='home' && <DashboardHome />}
+          {tab==='home' && <DashboardHome currentUser={currentUser} />}
           {tab==='addtask' && <AddTask currentUser={currentUser} />}
           {tab==='mytasks' && <Tasks currentUser={currentUser} />}
           {tab === 'edittask' && taskId && <EditTask taskId={taskId} />}

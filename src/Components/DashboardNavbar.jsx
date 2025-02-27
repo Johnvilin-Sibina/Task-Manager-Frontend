@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaSearch } from "react-icons/fa";
 
+
 const DashboardNavbar = () => {
     return (
         <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
@@ -14,7 +15,7 @@ const DashboardNavbar = () => {
         </div>
         <div className="flex items-center">
           <img
-            src="./profile.jpg" 
+            src="./avatar.jpg" 
             alt="Profile"
             className="w-10 h-10 rounded-full border border-gray-300"
           />
