@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import DashboardNavbar from "../Components/DashboardNavbar";
 import { toast } from "react-toastify";
@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { MyContext } from "../Context/MyProvider";
 
 const Tasks = () => {
-  const {tasks, setTasks} = useContext(MyContext)
-  const navigate = useNavigate()
-
-
+  const { tasks, setTasks } = useContext(MyContext);
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleDelete = async (id) => {
     try {
@@ -25,7 +24,7 @@ const Tasks = () => {
       );
       const data = await response.json();
       if (response.ok) {
-        setTasks(tasks.filter((task)=>task._id !== id));
+        setTasks(tasks.filter((task) => task._id !== id));
         toast.success(data.message);
       } else {
         toast.error("Something went wrong.");
@@ -35,13 +34,21 @@ const Tasks = () => {
     }
   };
 
-  const handleEdit = async(id)=>{
-    navigate(`/dashboard?tab=edittask&id=${id}`)
-  }
+  const handleEdit = (id) => {
+    navigate(`/dashboard?tab=edittask&id=${id}`);
+  };
+
+  // **Filter Tasks Based on Search Query**
+  const filteredTasks = tasks.filter(
+    (task) =>
+      task.title.toLowerCase().includes(searchQuery) || // Search by title
+      task.status.toLowerCase().includes(searchQuery) ||  // Search by status
+      task.priority.toLowerCase().includes(searchQuery) // Search by priority
+  );
 
   return (
     <div className="flex-1 flex flex-col">
-      <DashboardNavbar />
+      <DashboardNavbar setSearchQuery={setSearchQuery} /> 
       <div className="p-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
@@ -49,8 +56,8 @@ const Tasks = () => {
           </h2>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {tasks.map((task) => {
-              return (
+            {filteredTasks.length > 0 ? (
+              filteredTasks.map((task) => (
                 <div
                   key={task._id}
                   className="bg-white p-4 rounded-lg shadow-md transition-transform transform hover:scale-105"
@@ -72,7 +79,10 @@ const Tasks = () => {
                   </p>
 
                   <div className="flex justify-between mt-4">
-                    <button onClick={()=>handleEdit(task._id)} className="bg-indigo-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-indigo-700 transition">
+                    <button
+                      onClick={() => handleEdit(task._id)}
+                      className="bg-indigo-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-indigo-700 transition"
+                    >
                       <FaEdit className="mr-2" /> Edit
                     </button>
                     <button
@@ -83,8 +93,10 @@ const Tasks = () => {
                     </button>
                   </div>
                 </div>
-              );
-            })}
+              ))
+            ) : (
+              <p className="text-center text-gray-500">No matching tasks found.</p>
+            )}
           </div>
         </div>
       </div>
@@ -93,30 +105,3 @@ const Tasks = () => {
 };
 
 export default Tasks;
-
-  // const fetchTasks = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:5000/api/user/get-tasks/${user}`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           token: localStorage.getItem("Token"),
-  //         },
-  //       }
-  //     );
-  //     const data = await response.json();
-  //     if (!response.ok) {
-  //       toast.error(data.message);
-  //     } else {
-  //       setTasks(data.tasks);
-  //       toast.success("Tasks fetched successfully");
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.message);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchTasks();
-  // }, []);
